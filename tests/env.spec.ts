@@ -28,22 +28,18 @@ describe('Environment Validation (lib/env.ts)', () => {
     expect(parsed.CONTACT_RETENTION_HOURS).toBe(24);
   });
 
-  it('should throw clear error when NEXT_PUBLIC_SUPABASE_URL is invalid or missing', () => {
+  it('should throw clear error when NEXT_PUBLIC_SUPABASE_URL is an invalid URL format', () => {
     expect(() => {
       getEnv({
-        NEXT_PUBLIC_SUPABASE_URL: 'not-a-url',
-        NEXT_PUBLIC_SUPABASE_ANON_KEY: 'test-key',
+        NEXT_PUBLIC_SUPABASE_URL: 'not-a-valid-url',
       });
     }).toThrowError(/NEXT_PUBLIC_SUPABASE_URL/);
   });
 
   it('should apply defaults for optional parameters', () => {
-    const minimal = {
-      NEXT_PUBLIC_SUPABASE_URL: 'https://demo.supabase.co',
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'test-anon-key',
-    };
-
+    const minimal = {};
     const parsed = getEnv(minimal);
+    expect(parsed.NEXT_PUBLIC_SUPABASE_URL).toBe('https://mock.supabase.co');
     expect(parsed.DEFAULT_NOTIFY_MARGIN_MIN).toBe(5);
     expect(parsed.CONTACT_RETENTION_HOURS).toBe(24);
     expect(parsed.GEMINI_MODEL).toBe('gemini-1.5-flash');

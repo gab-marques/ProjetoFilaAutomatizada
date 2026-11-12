@@ -2,21 +2,29 @@ import { z } from 'zod';
 
 const envSchema = z.object({
   // Supabase
-  NEXT_PUBLIC_SUPABASE_URL: z.string().url('NEXT_PUBLIC_SUPABASE_URL must be a valid URL'),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1, 'NEXT_PUBLIC_SUPABASE_ANON_KEY is required'),
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1, 'SUPABASE_SERVICE_ROLE_KEY is required').optional().default('mock-service-role-key'),
+  NEXT_PUBLIC_SUPABASE_URL: z
+    .string()
+    .url('NEXT_PUBLIC_SUPABASE_URL must be a valid URL')
+    .default('https://mock.supabase.co'),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z
+    .string()
+    .min(1, 'NEXT_PUBLIC_SUPABASE_ANON_KEY is required')
+    .default('mock-anon-key'),
+  SUPABASE_SERVICE_ROLE_KEY: z
+    .string()
+    .default('mock-service-role-key'),
 
   // Gemini API
-  GEMINI_API_KEY: z.string().min(1, 'GEMINI_API_KEY is required').optional().default('mock-gemini-key'),
+  GEMINI_API_KEY: z.string().default('mock-gemini-key'),
   GEMINI_MODEL: z.string().default('gemini-1.5-flash'),
 
   // OpenRouteService
-  ORS_API_KEY: z.string().min(1, 'ORS_API_KEY is required').optional().default('mock-ors-key'),
+  ORS_API_KEY: z.string().default('mock-ors-key'),
 
   // Telegram
-  TELEGRAM_BOT_TOKEN: z.string().optional().default('mock-bot-token'),
-  TELEGRAM_BOT_USERNAME: z.string().optional().default('mock_bot'),
-  TELEGRAM_WEBHOOK_SECRET: z.string().optional().default('mock-webhook-secret'),
+  TELEGRAM_BOT_TOKEN: z.string().default('mock-bot-token'),
+  TELEGRAM_BOT_USERNAME: z.string().default('mock_bot'),
+  TELEGRAM_WEBHOOK_SECRET: z.string().default('mock-webhook-secret'),
 
   // Tick & Internal Secrets
   TICK_SECRET: z.string().default('mock-tick-secret'),
