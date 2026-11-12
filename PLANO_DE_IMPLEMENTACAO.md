@@ -195,14 +195,14 @@ erDiagram
 **Tempo Estimado:** 1–2 horas  
 **Objetivo:** Criar o esqueleto do projeto Next.js com todas as ferramentas de qualidade, ambiente validado e pipeline de CI.
 
-- [ ] **Tarefa 0.1:** Inicializar o projeto Next.js (App Router) com TypeScript estrito, TailwindCSS, ESLint, Prettier e Vitest.
-- [ ] **Tarefa 0.2:** Configurar scripts do `package.json`: `dev`, `build`, `lint`, `typecheck`, `test`.
-- [ ] **Tarefa 0.3:** Criar e configurar o validador de variáveis de ambiente com Zod em `lib/env.ts` (lança erro legível se faltar variável obrigatória) e criar `.env.example`.
-- [ ] **Tarefa 0.4:** Implementar cliente singleton do Supabase (`lib/supabase/client.ts` e `lib/supabase/server.ts`).
-- [ ] **Tarefa 0.5:** Criar esqueleto do wrapper LLM em `lib/llm.ts` configurável por `GEMINI_MODEL`.
-- [ ] **Tarefa 0.6:** Criar endpoint `GET /api/health` retornando `{ ok: true, timestamp }`.
-- [ ] **Tarefa 0.7:** Configurar GitHub Actions (`.github/workflows/ci.yml`) para rodar lint, typecheck e testes.
-- [ ] **Tarefa 0.8:** Criar documentações iniciais: `docs/DECISIONS.md`, `docs/PRIVACY.md` e `README.md` introdutório.
+- [x] **Tarefa 0.1:** Inicializar o projeto Next.js (App Router) com TypeScript estrito, TailwindCSS, ESLint, Prettier e Vitest.
+- [x] **Tarefa 0.2:** Configurar scripts do `package.json`: `dev`, `build`, `lint`, `typecheck`, `test`.
+- [x] **Tarefa 0.3:** Criar e configurar o validador de variáveis de ambiente com Zod em `lib/env.ts` (lança erro legível se faltar variável obrigatória) e criar `.env.example`.
+- [x] **Tarefa 0.4:** Implementar cliente singleton do Supabase (`lib/supabase/client.ts` e `lib/supabase/server.ts`).
+- [x] **Tarefa 0.5:** Criar esqueleto do wrapper LLM em `lib/llm.ts` configurável por `GEMINI_MODEL`.
+- [x] **Tarefa 0.6:** Criar endpoint `GET /api/health` retornando `{ ok: true, timestamp }`.
+- [x] **Tarefa 0.7:** Configurar GitHub Actions (`.github/workflows/ci.yml`) para rodar lint, typecheck e testes.
+- [x] **Tarefa 0.8:** Criar documentações iniciais: `docs/DECISIONS.md`, `docs/PRIVACY.md` e `README.md` introdutório.
 
 **Critérios de Aceite:**
 - `npm run build`, `npm run lint`, `npm run typecheck` e `npm test` passam com sucesso.
@@ -215,16 +215,16 @@ erDiagram
 **Tempo Estimado:** 2–3 horas  
 **Objetivo:** Permitir que o cliente entre na fila via formulário público web e que o restaurante veja e atenda a fila no painel.
 
-- [ ] **Tarefa 1.1:** Criar migração SQL inicial do Supabase com as tabelas completas, enums de status e canal, chaves estrangeiras e índices.
-- [ ] **Tarefa 1.2:** Configurar políticas de segurança RLS (Row Level Security):
+- [x] **Tarefa 1.1:** Criar migração SQL inicial do Supabase com as tabelas completas, enums de status e canal, chaves estrangeiras e índices.
+- [x] **Tarefa 1.2:** Configurar políticas de segurança RLS (Row Level Security):
   - Acesso anônimo apenas para criação via API e leitura restrita por `link_token`.
   - Acesso de leitura/atualização irrestrito para membros autenticados de `staff`.
-- [ ] **Tarefa 1.3:** Criar script/seed de dados para o restaurante de demonstração (*"Cantina Demo"*, Curitiba, capacidade: `{"2":6,"4":8,"6":2}`).
-- [ ] **Tarefa 1.4:** Implementar função determinística de cálculo de posição na fila em `lib/queue/position.ts` (considerando agrupamentos compatíveis com tamanho de mesa) com suíte de testes Vitest (mínimo de 6 cenários).
-- [ ] **Tarefa 1.5:** Criar página pública de entrada na fila `/r/[slug]/page.tsx` com formulário (apelido, tamanho do grupo 1–12 e checkbox obrigatório de consentimento LGPD).
-- [ ] **Tarefa 1.6:** Implementar rota `POST /api/queue` que insere em `queue_entries` com status `waiting` e gera o `link_token`.
-- [ ] **Tarefa 1.7:** Criar página do cliente `/r/[slug]/e/[token]/page.tsx` exibindo status em tempo real, posição atualizada a cada 15 segundos e botão de desistência.
-- [ ] **Tarefa 1.8:** Implementar painel operacional inicial `/painel` listando a fila em tempo real com ações imediatas: *"Sentou"*, *"Não veio"* e *"Cancelar"*, registrando o atendimento em `wait_history` com `actual_wait_min = seated_at - joined_at`.
+- [x] **Tarefa 1.3:** Criar script/seed de dados para o restaurante de demonstração (*"Cantina Demo"*, Curitiba, capacidade: `{"2":6,"4":8,"6":2}`).
+- [x] **Tarefa 1.4:** Implementar função determinística de cálculo de posição na fila em `lib/queue/position.ts` (considerando agrupamentos compatíveis com tamanho de mesa) com suíte de testes Vitest (mínimo de 6 cenários).
+- [x] **Tarefa 1.5:** Criar página pública de entrada na fila `/r/[slug]/page.tsx` com formulário (apelido, tamanho do grupo 1–12 e checkbox obrigatório de consentimento LGPD).
+- [x] **Tarefa 1.6:** Implementar rota `POST /api/queue` que insere em `queue_entries` com status `waiting` e gera o `link_token`.
+- [x] **Tarefa 1.7:** Criar página do cliente `/r/[slug]/e/[token]/page.tsx` exibindo status em tempo real, posição atualizada a cada 15 segundos e botão de desistência.
+- [x] **Tarefa 1.8:** Implementar painel operacional inicial `/painel` listando a fila em tempo real com ações imediatas: *"Sentou"*, *"Não veio"* e *"Cancelar"*, registrando o atendimento em `wait_history` com `actual_wait_min = seated_at - joined_at`.
 
 **Critérios de Aceite:**
 - Migração aplica do zero sem inconsistências.
@@ -237,15 +237,15 @@ erDiagram
 **Tempo Estimado:** 2–3 horas  
 **Objetivo:** Integrar cálculo de tempo de deslocamento sem armazenar dados pessoais sensíveis de localização.
 
-- [ ] **Tarefa 2.1:** Implementar cliente ORS em `lib/routing/ors.ts`:
+- [x] **Tarefa 2.1:** Implementar cliente ORS em `lib/routing/ors.ts`:
   - `geocode(address)`: busca no endpoint `/geocode/search` com restrição de país (`boundary.country=BR`) e foco nas coordenadas do restaurante, retornando latitude, longitude e nome do bairro.
   - `travelMinutes(origin, destination, mode)`: calcula tempo em minutos via `/v2/directions` (carro ou a pé) arredondado para cima.
   - Adicionar timeout de 8 segundos, política de 2 retries com backoff e cache em memória (TTL de 10 min) indexado por coordenadas aproximadas.
-- [ ] **Tarefa 2.2:** Adicionar no formulário público a opção de preencher endereço ou utilizar botão *"Usar minha localização"* via API do navegador (`navigator.geolocation`).
-- [ ] **Tarefa 2.3:** Disponibilizar alternativa manual *"Já estou a X minutos do local"* para quem não deseja informar localização.
-- [ ] **Tarefa 2.4:** Atualizar a rota `POST /api/queue` para calcular `travel_minutes` e descartar as coordenadas e endereço completo imediatamente em memória.
-- [ ] **Tarefa 2.5:** Escrever teste unitário validando que o payload final gravado em banco **não** possui endereço, rua, número ou coordenadas do cliente.
-- [ ] **Tarefa 2.6:** Criar página pública `/privacidade` detalhando conformidade com a LGPD (Art. 7º, I), finalidade de uso e ciclo de descarte.
+- [x] **Tarefa 2.2:** Adicionar no formulário público a opção de preencher endereço ou utilizar botão *"Usar minha localização"* via API do navegador (`navigator.geolocation`).
+- [x] **Tarefa 2.3:** Disponibilizar alternativa manual *"Já estou a X minutos do local"* para quem não deseja informar localização.
+- [x] **Tarefa 2.4:** Atualizar a rota `POST /api/queue` para calcular `travel_minutes` e descartar as coordenadas e endereço completo imediatamente em memória.
+- [x] **Tarefa 2.5:** Escrever teste unitário validando que o payload final gravado em banco **não** possui endereço, rua, número ou coordenadas do cliente.
+- [x] **Tarefa 2.6:** Criar página pública `/privacidade` detalhando conformidade com a LGPD (Art. 7º, I), finalidade de uso e ciclo de descarte.
 
 **Critérios de Aceite:**
 - Testes com mocks do OpenRouteService cobrem sucesso, endereço inexistente e timeout de rede.
@@ -258,15 +258,15 @@ erDiagram
 **Tempo Estimado:** 3–5 horas  
 **Objetivo:** Construir e treinar modelos de previsão explicáveis e comparáveis (Baseline de Regra, Média Móvel e Regressão Linear Regularizada).
 
-- [ ] **Tarefa 3.1:** Criar gerador de histórico sintético em `scripts/seed-history.ts` simulando ~6 semanas de movimentação com chegadas de Poisson (picos almoço 12–14h e jantar 19–22h), tempos de giro realistas por tamanho de mesa e semente aleatória fixa (`seedrandom`).
-- [ ] **Tarefa 3.2:** Implementar extrator de features em `lib/predict/features.ts`: posição relativa, grupos à frente, tamanho da mesa (one-hot), dia da semana, codificação cíclica de hora (seno/cosseno) e giro médio recente.
-- [ ] **Tarefa 3.3:** Implementar modelos determinísticos em TypeScript puro:
+- [x] **Tarefa 3.1:** Criar gerador de histórico sintético em `scripts/seed-history.ts` simulando ~6 semanas de movimentação com chegadas de Poisson (picos almoço 12–14h e jantar 19–22h), tempos de giro realistas por tamanho de mesa e semente aleatória fixa (`seedrandom`).
+- [x] **Tarefa 3.2:** Implementar extrator de features em `lib/predict/features.ts`: posição relativa, grupos à frente, tamanho da mesa (one-hot), dia da semana, codificação cíclica de hora (seno/cosseno) e giro médio recente.
+- [x] **Tarefa 3.3:** Implementar modelos determinísticos em TypeScript puro:
   - **Baseline A (`baselineRule.ts`):** $\text{Espera} \approx \frac{\text{grupos compatíveis}}{\text{mesas}} \times \text{giro médio}$.
   - **Baseline B (`baselineMA.ts`):** média móvel agrupada por dia da semana $\times$ faixa horária $\times$ tamanho de grupo com fallback hierárquico.
   - **Modelo C (`linreg.ts`):** regressão linear com regularização Ridge implementada via equações normais em TypeScript.
-- [ ] **Tarefa 3.4:** Implementar rotina de validação temporal (`evaluate.ts`): treina nas primeiras semanas e avalia nos últimos 7 dias (*holdout*), calculando MAE e RMSE.
-- [ ] **Tarefa 3.5:** Implementar rota de retreino `POST /api/retrain` (protegida por `TICK_SECRET`) que grava nova linha em `model_versions` se o MAE superar o anterior.
-- [ ] **Tarefa 3.6:** Criar script `scripts/evaluate.ts` que executa os 3 modelos, compara com dados de teste e gera automaticamente a tabela de métricas em `docs/EVAL.md`.
+- [x] **Tarefa 3.4:** Implementar rotina de validação temporal (`evaluate.ts`): treina nas primeiras semanas e avalia nos últimos 7 dias (*holdout*), calculando MAE e RMSE.
+- [x] **Tarefa 3.5:** Implementar rota de retreino `POST /api/retrain` (protegida por `TICK_SECRET`) que grava nova linha em `model_versions` se o MAE superar o anterior.
+- [x] **Tarefa 3.6:** Criar script `scripts/evaluate.ts` que executa os 3 modelos, compara com dados de teste e gera automaticamente a tabela de métricas em `docs/EVAL.md`.
 
 **Critérios de Aceite:**
 - Teste unitário do algoritmo de regressão recupera coeficientes de equação sintética com erro inferior a 0.1.

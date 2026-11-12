@@ -1,5 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
+import WebSocket from 'ws';
 import { env } from '@/lib/env';
+
+// Polyfill WebSocket for Node.js < 22 environments
+if (typeof globalThis.WebSocket === 'undefined') {
+  globalThis.WebSocket = WebSocket as unknown as typeof globalThis.WebSocket;
+}
 
 export function createServerClient(useServiceRole = false) {
   const key = useServiceRole
@@ -10,6 +16,10 @@ export function createServerClient(useServiceRole = false) {
     auth: {
       persistSession: false,
       autoRefreshToken: false,
+    },
+    realtime: {
+      // @ts-expect-error WebSocket transport for Node 20
+      transport: WebSocket,
     },
   });
 }
