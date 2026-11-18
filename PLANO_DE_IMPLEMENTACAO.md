@@ -4,6 +4,8 @@
 > **Estimativa Total:** ~21 a 31 horas  
 > **Alvo:** Sistema completo em produção, portfólio no GitHub, documentação de ROI e vídeo demonstrativo de 90s.
 
+> **Modo atual:** desenvolvimento somente local com Supabase CLI + Docker. Nenhuma hospedagem ou conta Supabase em nuvem é necessária para desenvolver ou demonstrar o MVP.
+
 ---
 
 ## 1. Visão Geral e Proposta de Valor
@@ -197,12 +199,13 @@ erDiagram
 
 - [x] **Tarefa 0.1:** Inicializar o projeto Next.js (App Router) com TypeScript estrito, TailwindCSS, ESLint, Prettier e Vitest.
 - [x] **Tarefa 0.2:** Configurar scripts do `package.json`: `dev`, `build`, `lint`, `typecheck`, `test`.
-- [x] **Tarefa 0.3:** Criar e configurar o validador de variáveis de ambiente com Zod em `lib/env.ts` (lança erro legível se faltar variável obrigatória) e criar `.env.example`.
+- [ ] **Tarefa 0.3:** Criar e configurar o validador de variáveis de ambiente com Zod em `lib/env.ts` (lança erro legível se faltar variável obrigatória) e criar `.env.example`.
 - [x] **Tarefa 0.4:** Implementar cliente singleton do Supabase (`lib/supabase/client.ts` e `lib/supabase/server.ts`).
 - [x] **Tarefa 0.5:** Criar esqueleto do wrapper LLM em `lib/llm.ts` configurável por `GEMINI_MODEL`.
 - [x] **Tarefa 0.6:** Criar endpoint `GET /api/health` retornando `{ ok: true, timestamp }`.
 - [x] **Tarefa 0.7:** Configurar GitHub Actions (`.github/workflows/ci.yml`) para rodar lint, typecheck e testes.
-- [x] **Tarefa 0.8:** Criar documentações iniciais: `docs/DECISIONS.md`, `docs/PRIVACY.md` e `README.md` introdutório.
+- [ ] **Tarefa 0.8:** Criar documentações iniciais: `docs/DECISIONS.md`, `docs/PRIVACY.md` e `README.md` introdutório.
+- [x] **Tarefa 0.9:** Preparar desenvolvimento totalmente local com Supabase CLI + Docker, configuração do projeto, migração inicial e instruções em `docs/LOCAL_DEVELOPMENT.md`; nenhuma conta ou infraestrutura hospedada é necessária.
 
 **Critérios de Aceite:**
 - `npm run build`, `npm run lint`, `npm run typecheck` e `npm test` passam com sucesso.
@@ -216,12 +219,12 @@ erDiagram
 **Objetivo:** Permitir que o cliente entre na fila via formulário público web e que o restaurante veja e atenda a fila no painel.
 
 - [x] **Tarefa 1.1:** Criar migração SQL inicial do Supabase com as tabelas completas, enums de status e canal, chaves estrangeiras e índices.
-- [x] **Tarefa 1.2:** Configurar políticas de segurança RLS (Row Level Security):
+- [ ] **Tarefa 1.2:** Configurar políticas de segurança RLS (Row Level Security):
   - Acesso anônimo apenas para criação via API e leitura restrita por `link_token`.
   - Acesso de leitura/atualização irrestrito para membros autenticados de `staff`.
 - [x] **Tarefa 1.3:** Criar script/seed de dados para o restaurante de demonstração (*"Cantina Demo"*, Curitiba, capacidade: `{"2":6,"4":8,"6":2}`).
 - [x] **Tarefa 1.4:** Implementar função determinística de cálculo de posição na fila em `lib/queue/position.ts` (considerando agrupamentos compatíveis com tamanho de mesa) com suíte de testes Vitest (mínimo de 6 cenários).
-- [x] **Tarefa 1.5:** Criar página pública de entrada na fila `/r/[slug]/page.tsx` com formulário (apelido, tamanho do grupo 1–12 e checkbox obrigatório de consentimento LGPD).
+- [ ] **Tarefa 1.5:** Criar página pública de entrada na fila `/r/[slug]/page.tsx` com formulário (apelido, tamanho do grupo 1–12 e checkbox obrigatório de consentimento LGPD).
 - [x] **Tarefa 1.6:** Implementar rota `POST /api/queue` que insere em `queue_entries` com status `waiting` e gera o `link_token`.
 - [x] **Tarefa 1.7:** Criar página do cliente `/r/[slug]/e/[token]/page.tsx` exibindo status em tempo real, posição atualizada a cada 15 segundos e botão de desistência.
 - [x] **Tarefa 1.8:** Implementar painel operacional inicial `/painel` listando a fila em tempo real com ações imediatas: *"Sentou"*, *"Não veio"* e *"Cancelar"*, registrando o atendimento em `wait_history` com `actual_wait_min = seated_at - joined_at`.
@@ -237,13 +240,13 @@ erDiagram
 **Tempo Estimado:** 2–3 horas  
 **Objetivo:** Integrar cálculo de tempo de deslocamento sem armazenar dados pessoais sensíveis de localização.
 
-- [x] **Tarefa 2.1:** Implementar cliente ORS em `lib/routing/ors.ts`:
+- [ ] **Tarefa 2.1:** Implementar cliente ORS em `lib/routing/ors.ts`:
   - `geocode(address)`: busca no endpoint `/geocode/search` com restrição de país (`boundary.country=BR`) e foco nas coordenadas do restaurante, retornando latitude, longitude e nome do bairro.
   - `travelMinutes(origin, destination, mode)`: calcula tempo em minutos via `/v2/directions` (carro ou a pé) arredondado para cima.
   - Adicionar timeout de 8 segundos, política de 2 retries com backoff e cache em memória (TTL de 10 min) indexado por coordenadas aproximadas.
-- [x] **Tarefa 2.2:** Adicionar no formulário público a opção de preencher endereço ou utilizar botão *"Usar minha localização"* via API do navegador (`navigator.geolocation`).
+- [ ] **Tarefa 2.2:** Adicionar no formulário público a opção de preencher endereço ou utilizar botão *"Usar minha localização"* via API do navegador (`navigator.geolocation`).
 - [x] **Tarefa 2.3:** Disponibilizar alternativa manual *"Já estou a X minutos do local"* para quem não deseja informar localização.
-- [x] **Tarefa 2.4:** Atualizar a rota `POST /api/queue` para calcular `travel_minutes` e descartar as coordenadas e endereço completo imediatamente em memória.
+- [x] **Tarefa 2.4:** Calcular `travel_minutes` no endpoint de estimativa chamado pelo formulário e enviar somente os minutos e, opcionalmente, o bairro a `POST /api/queue`; endereço e coordenadas não são persistidos.
 - [x] **Tarefa 2.5:** Escrever teste unitário validando que o payload final gravado em banco **não** possui endereço, rua, número ou coordenadas do cliente.
 - [x] **Tarefa 2.6:** Criar página pública `/privacidade` detalhando conformidade com a LGPD (Art. 7º, I), finalidade de uso e ciclo de descarte.
 
@@ -279,17 +282,19 @@ erDiagram
 **Tempo Estimado:** 3–4 horas  
 **Objetivo:** Notificar o cliente de forma proativa via Telegram no exato momento de sair de casa e gerenciar o ciclo de vida da fila.
 
-- [ ] **Tarefa 4.1:** Implementar cliente do Telegram em `lib/channels/telegram.ts` (envio de mensagens formatadas em HTML com botões interativos inline: *"Estou a caminho"*, *"Me passa pra depois"*, *"Cancelar"*).
-- [ ] **Tarefa 4.2:** Implementar rota `POST /api/telegram/webhook` com validação de assinatura (`X-Telegram-Bot-Api-Secret-Token`).
-- [ ] **Tarefa 4.3:** Tratar o comando `/start <link_token>`: vincula o `chat_id` à entrada na tabela `contacts` (com data de expurgo `purge_after = now() + 24h`) e responde com a posição atual e tempo previsto.
-- [ ] **Tarefa 4.4:** Adicionar na tela web `/r/[slug]/e/[token]` o botão interativo *"Receber aviso no Telegram"* com deep link `https://t.me/<BOT_USERNAME>?start=<link_token>`.
+- [x] **Tarefa 4.1:** Implementar cliente do Telegram em `lib/channels/telegram.ts` (envio de mensagens formatadas em HTML com botões interativos inline: *"Estou a caminho"*, *"Me passa pra depois"*, *"Cancelar"*).
+- [x] **Tarefa 4.2:** Implementar rota `POST /api/telegram/webhook` com validação de assinatura (`X-Telegram-Bot-Api-Secret-Token`).
+- [x] **Tarefa 4.3:** Tratar o comando `/start <link_token>`: vincula o `chat_id` à entrada na tabela `contacts` (com data de expurgo `purge_after = now() + 24h`) e responde com a posição atual e tempo previsto.
+- [x] **Tarefa 4.4:** Adicionar na tela web `/r/[slug]/e/[token]` o botão interativo *"Receber aviso no Telegram"* com deep link `https://t.me/<BOT_USERNAME>?start=<link_token>`.
 - [ ] **Tarefa 4.5:** Implementar o endpoint agendado `POST /api/tick` (autenticado via header `x-tick-secret`):
   - Recalcula a espera restante para entradas em estado `waiting`.
   - Dispara a notificação *"🚗 Saia agora! Sua mesa deve liberar em ~X min e você leva ~Y min"* quando $\text{espera restante} - \text{tempo deslocamento} \le \text{margem}$ (padrão 5 min).
   - Garante idempotência e proteção contra disparos duplicados via lock transacional (`UPDATE ... WHERE notified_at IS NULL RETURNING`).
   - Dispara lembrete após 5 minutos sem confirmação.
   - Executa limpeza LGPD apagando contatos cujo `purge_after` expirou.
-- [ ] **Tarefa 4.6:** Criar template do workflow n8n em `n8n/tick-workflow.json` e documentação de configuração em `docs/N8N_TICK.md` (Schedule de 1 min para tick e cron das 04:00 para retreino).
+- [x] **Tarefa 4.6:** Criar template do workflow n8n em `n8n/tick-workflow.json` e documentação de configuração em `docs/N8N_TICK.md` (Schedule de 1 min para tick e cron das 04:00 para retreino).
+- [ ] **Tarefa 4.7:** Fazer o comando `/apagar` excluir de fato os dados identificáveis do cliente; hoje o webhook apenas confirma a exclusão sem executá-la.
+- [ ] **Tarefa 4.8:** Ajustar a retenção de `telegram_chat_id` para contar até 24 horas após o encerramento do atendimento, conforme as regras do projeto; hoje o prazo começa ao vincular o contato.
 
 **Critérios de Aceite:**
 - Chamar `/api/tick` em sequência não envia notificações duplicadas.
@@ -545,6 +550,25 @@ A apresentação final no `README.md` conterá dados comprobatórios baseados em
 
 ## 9. Próximos Passos Imediatos
 
-Para iniciar a implementação com foco e organização, a execução deve seguir a ordem estrita das fases:
-1. **Passo 1:** Executar a **Fase 0** criando o repositório, configurando Next.js, Vitest, `.env.example`, `lib/env.ts` e garantindo o comando `npm run build && npm test`.
-2. **Passo 2:** Prosseguir para a **Fase 1** criando as migrações SQL no Supabase, a lógica de posicionamento de mesas com testes unitários e as telas iniciais da fila e do painel.
+O ambiente local está preparado; não é necessário hospedar o Supabase nem criar uma conta para continuar o desenvolvimento.
+
+1. Corrigir as tarefas desmarcadas nas fases 0–4, priorizando validação das variáveis, políticas RLS, formulário, integração ORS e idempotência/lembrete do tick.
+2. Concluir a exclusão real de dados pelo comando `/apagar`.
+3. Seguir para a Fase 5 (agente conversacional) e depois para autenticação e métricas da Fase 6.
+4. Tratar as Fases 7–8 como implantação/publicação opcionais e materiais de portfólio, não como requisito para executar localmente.
+
+---
+
+## 10. Revisão dos Itens Marcados como Concluídos
+
+Revisão do código em 12/11/2026. Itens incompletos foram desmarcados acima para que o checklist reflita o estado observado:
+
+- **0.3:** `lib/env.ts` preenche segredos com valores `mock` por padrão; não rejeita ausência de variáveis críticas.
+- **0.8:** `docs/DECISIONS.md` e `docs/PRIVACY.md` existem, mas não há `README.md`.
+- **1.2:** A política pública de leitura de `queue_entries` usa `USING (true)`, permitindo leitura de todas as entradas; não há políticas que restrinjam leitura gerencial a `staff`.
+- **1.5:** O formulário oferece grupos de 1, 2, 3, 4, 5, 6, 8 e 10 pessoas, não todos os tamanhos de 1 a 12.
+- **2.1:** O cliente ORS faz uma nova tentativa (não duas) e o cache está no cálculo da rota, não na geocodificação.
+- **2.2:** O formulário não implementa o botão de geolocalização do navegador; há entrada de endereço e tempo manual.
+- **4.5:** O tick atualiza status sem a condição atômica `notified_at IS NULL` e não implementa lembrete após cinco minutos.
+- **4.7:** `/apagar` responde ao usuário, mas não executa exclusão.
+- **4.8:** A expiração do contato é definida no vínculo do Telegram, não no encerramento do atendimento.

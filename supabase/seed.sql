@@ -1,0 +1,2 @@
+-- The demo restaurant is inserted by the initial migration.
+-- Add optional local-only fixtures here when needed.

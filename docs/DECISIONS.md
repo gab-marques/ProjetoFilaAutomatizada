@@ -37,3 +37,11 @@ Este documento registra as decisões arquiteturais e técnicas tomadas durante o
 
 - **Decisão:** O endereço completo e as coordenadas exatas (`lat`, `lng`) do cliente são mantidos apenas em memória durante a requisição para chamada ao OpenRouteService. Apenas o tempo calculado (`travel_minutes`) e opcionalmente o nome do bairro (`origin_area`) são persistidos.
 - **Motivação:** Total conformidade com a LGPD (Lei 13.709/2018), mitigando qualquer risco de vazamento de dados de localização sensíveis dos usuários.
+
+---
+
+## 6. Desenvolvimento Local como Padrão
+
+- **Decisão:** Desenvolver e demonstrar o MVP com Supabase CLI e Docker locais. Não é necessário criar um projeto Supabase hospedado; a publicação em nuvem fica restrita à Fase 7 e só ocorre quando for desejada.
+- **Motivação:** Permite executar o fluxo completo sem conta externa, mantém os dados de desenvolvimento no computador e evita confundir execução local com deploy.
+- **Implementação:** A configuração do Supabase e as migrações ficam versionadas no repositório. As portas publicadas são limitadas a `127.0.0.1`; as chaves geradas localmente são armazenadas em `.env.local`, ignorado pelo Git.
